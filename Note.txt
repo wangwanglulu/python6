@@ -1,0 +1,9 @@
+第三堂课
+作业看了吗？两首歌名，美国科学院deadline
+水平参差不齐，操作命令行和文本的区别
+搞数据用anaconda模块的使用，程序+解释器，原版Python有啥区别，其他promptJupyter
+怎么用这个PPT，ESC，Alt
+寒假作业，Markdown，typora，非要用word，word排版艺术
+交互式编程，脚本式编程
+不能打开spyder的问题
+List 返回值

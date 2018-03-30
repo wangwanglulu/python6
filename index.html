@@ -1,0 +1,1569 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>reveal.js</title>
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/white.css">
+    <link rel="stylesheet" href="css/theme/custom.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal" style="background-color: #fff;">
+        <div class="slides">
+            <section data-background-video="bgm.mp4" data-background-video-loop data-background-video-muted style="text-align: left;">
+                <h2 style="color: white">Python Programming</h2>
+                <h5 style="color: white">Lecture 6 Game of Life, Functions</h5>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">6.1 Game of Life</h2>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Stephen Wolfram was not the only mathematician to study cellular automata. Probably the most famous cellular automaton was invented by John Conway and is called the Game of Life.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment"><img data-src="conway.jpg" style="height: 200pt"></div>
+                    <ul>
+                        <li class="fragment">
+                            <p>Conway is currently Professor Emeritus of Mathematics at Princeton University in New Jersey.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Game of Life</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>Conway’s automaton consists of cells that are laid out on a two-dimensional grid.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>this grid goes on indefinitely in all directions. Each cell on the grid has eight neighbors: the cells that surround it orthogonally and diagonally. Each cell can be in two different states: It is either dead or alive.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>In most examples, dead cells are rendered white, while live cells are colored black.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Rules</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>A live cell that has fewer than two live neighbors dies from loneliness.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>A live cell that has more than three live neighbors dies from overcrowding.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>A live cell that has two or three live neighbors stays alive.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>A dead cell that has exactly three live neighbors becomes alive.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Example</h3>
+                    <div class="fragment"><img data-src="iteration.png" style="height: 100pt"></div>
+                    <ul>
+                        <li class="fragment">
+                            <p>When set into motion, the Game of Life usually has quite chaotic results, with a lot of activity exploding from its original live cells.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Demo: Game of Life (Random)</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Frequently after a number of iterations the Game of Life settles in a more or less stable configuration, sometimes with a few groups of cells that oscillate between two states.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>One of the earliest questions that the researchers studying the Game of Life asked themselves was this: “Is there an initial configuration of live cells that expands forever?”</p>
+                        </li>
+                        <li class="fragment">
+                            <p><b>glider</b></p>
+                        </li>
+                        <div class="fragment"><img data-src="glider.png" style="height: 100pt"></div>
+                        <li class="fragment">
+                            <p>Demo: glider and double gliders</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Glider gun</p>
+                        </li>
+                        <div class="fragment"><img data-src="glidergun.png" style="height: 150pt"></div>
+                        <div class="fragment"><img data-src="glider_gun.gif" style="height: 150pt"></div>
+                        <li class="fragment">
+                            <p>Demo: glider gun</p>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <section>
+                <section data-background="#f1c40f" style="color: white">
+                    <h2 style="color: white">6.2 Pac-man Game</h2>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Pac-Man (Japanese: パックマン Hepburn: Pakkuman), stylized as PAC-MAN, is an arcade game developed by Namco and first released in Japan in May 1980.</p>
+                        </li>
+                        <div id="leftc" class="fragment"><img data-src="initial-playfield.png" style="height: 300pt"></div>
+                        <div id="rightc" class="fragment"><img data-src="pacman.jpg" style="height: 300pt"></div>
+                    </ul>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="tiled-playfield.png" style="height: 500pt"></div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="intersection-map.png" style="height: 500pt"></div>
+                </section>
+                <section>
+                    <div id="leftc" class="fragment"><img data-src="decision.png" style="height: 250pt"></div>
+                    <div id="rightc" class="fragment"><img data-src="bad-decision.png" style="height: 250pt"></div>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="scatter-targets.png" style="height: 500pt"></div>
+                </section>
+                <section>
+                    <ul style="list-style-type:none">
+                        <li class="fragment">
+                            <p>Red Ghost</p>
+                        </li>
+                        <li class="fragment">
+                            <p><img data-src="blinky-targeting.png" style="height: 150pt"></p>
+                        </li>
+                        <li class="fragment">
+                            <p>Pink Ghost</p>
+                        </li>
+                        <li class="fragment">
+                            <p><img data-src="pinky-targeting.png" style="height: 200pt">
+                                <img data-src="pinky-targeting2.png" style="height: 200pt"></p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul style="list-style-type:none">
+                        <li class="fragment">
+                            <p>Blue Ghost</p>
+                        </li>
+                        <li class="fragment">
+                            <p><img data-src="inky-targeting.png" style="height: 170pt"></p>
+                        </li>
+                        <li class="fragment">
+                            <p>Orange Ghost</p>
+                        </li>
+                        <li class="fragment">
+                            <p><img data-src="clyde-targeting2.png" style="height: 120pt">
+                                <img data-src="clyde-targeting3.png" style="height: 150pt"></p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Wrapping up</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>Pac-Man is an amazing example of seemingly-complex behavior arising from only a few cleverly-designed rules</p>
+                        </li>
+                        <li class="fragment">
+                            <p>The combination of simple behaviors gives players the impression they are being hunted collaboratively, when they simply have complementary strategies.
+                            </p>
+                        </li>
+                        <li class="fragment">
+                            <p>Finally, let's take a look at the AMAZING game of life again.
+                            </p>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">6.3 Functions (3)</h2>
+                    <p>passing a list, arbitrary arguments</p>
+                </section>
+                <section>
+                    <h3>Passing a list</h3>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def greet_users(names):
+    for name in names:
+        msg = "Hello, " + name.title() + "!"
+        print(msg)
+
+usernames = ['hannah', 'ty', 'margot']
+greet_users(usernames)
+
+Hello, Hannah!
+Hello, Ty!
+Hello, Margot!
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Modifying a List in a Function</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+unprinted_designs = ['iphone case', 'robot pendant', 'dodecahedron']
+completed_models = []
+
+while unprinted_designs:
+    current_design = unprinted_designs.pop()
+    print("Printing model: " + current_design)
+    completed_models.append(current_design)
+
+print("\nThe following models have been printed:")
+for completed_model in completed_models:
+    print(completed_model)
+
+Printing model: dodecahedron
+Printing model: robot pendant
+Printing model: iphone case
+
+The following models have been printed:
+dodecahedron
+robot pendant
+iphone case
+
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Defining two functions</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def print_models(unprinted_designs, completed_models):
+    while unprinted_designs:
+        current_design = unprinted_designs.pop()
+        print("Printing model: " + current_design)
+        completed_models.append(current_design)
+
+def show_completed_models(completed_models):
+    print("\nThe following models have been printed:")
+    for completed_model in completed_models:
+        print(completed_model)
+
+unprinted_designs = ['iphone case', 'robot pendant', 'dodecahedron']
+completed_models = []
+
+print_models(unprinted_designs, completed_models)
+show_completed_models(completed_models)
+
+Printing model: dodecahedron
+Printing model: robot pendant
+Printing model: iphone case
+
+The following models have been printed:
+dodecahedron
+robot pendant
+iphone case
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Preventing a Function from Modifying a List</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Create a copy of the list</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+function_name(list_name[:])
+
+print_models(unprinted_designs[:], completed_models)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Passing an Arbitrary Number of Arguments</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def make_pizza(*toppings):
+    print(toppings)
+
+make_pizza('pepperoni')
+make_pizza('mushrooms', 'green peppers', 'extra cheese')
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>Note that Python packs the arguments into a tuple, even if the function receives only one value.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def make_pizza(*toppings):
+    print("\nMaking a pizza with the following toppings:")
+    for topping in toppings:
+        print("- " + topping)
+
+make_pizza('pepperoni')
+make_pizza('mushrooms', 'green peppers', 'extra cheese')
+
+Making a pizza with the following toppings:
+- pepperoni
+Making a pizza with the following toppings:
+- mushrooms
+- green peppers
+- extra cheese
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Mixing Positional and Arbitrary Arguments</p>
+                        </li>
+                        <li class="fragment">
+                            <p>If you want a function to accept several different kinds of arguments, the parameter that accepts an arbitrary number of arguments must be placed last in the function definition.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def make_pizza(size, *toppings):
+    print("\nMaking a " + str(size) +
+        "-inch pizza with the following toppings:")
+    for topping in toppings:
+        print("- " + topping)
+
+make_pizza(16, 'pepperoni')
+make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+
+Making a 16-inch pizza with the following toppings:
+- pepperoni
+
+Making a 12-inch pizza with the following toppings:
+- mushrooms
+- green peppers
+- extra cheese
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Using Arbitrary Keyword Arguments</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def build_profile(first, last, **user_info):
+    profile = {}
+    profile['first_name'] = first
+    profile['last_name'] = last
+    for key, value in user_info.items():
+        profile[key] = value
+    return profile
+
+user_profile = build_profile('albert', 'einstein',
+                            location='princeton',
+                            field='physics')
+print(user_profile)
+
+{'first_name': 'albert', 'last_name': 'einstein',
+'location': 'princeton', 'field': 'physics'}
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">Example</li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def test(x,y=1,*a,**b):
+    print(x,y,a,b)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+test(1)
+test(1,2)
+test(1,2,3)
+test(1,2,3,4)
+test(x=1,y=2)
+test(1,a=2)
+test(1,2,3,a=4)
+test(1,2,3,y=4)
+</code></pre>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">6.4 Functions (4)</h2>
+                    <p>Return a function, Recursion Intro</p>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">Return a function</li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def calc_sum(*args):
+    ax = 0
+    for n in args:
+        ax = ax + n
+    return ax
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for n in args:
+            ax = ax + n
+        return ax
+    return sum
+
+f = lazy_sum(1, 3, 5, 7, 9)
+print(f()) # print(f) causes error
+print(type(f)) #Even if you delete lazy_sum, f still exists.
+
+25
+function
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> f1 = lazy_sum(1, 3, 5, 7, 9)
+>>> f2 = lazy_sum(1, 3, 5, 7, 9)
+>>> f1==f2
+False
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Defining a closure function</p>
+                        </li>
+                        <li class="fragment">
+                            <p>When do we have a closure?</p>
+                            <ul>
+                                <li class="fragment">
+                                    <p>We must have a nested function (function inside a function).</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The nested function must refer to a value defined in the enclosing function.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The enclosing function must return the nested function.</p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="fragment">
+                            <p>When to use closures?</p>
+                            <ul>
+                                <li class="fragment">
+                                    <p>Closures can avoid the use of global values and provides some form of data hiding. It can also provide an object oriented solution to the problem.</p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Example</h3>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def print_msg():
+    msg = "zen of python"
+    def printer():
+        return msg
+    return printer
+
+another = print_msg()
+print(another())
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def make_multiplier_of(n):
+    def multiplier(x):
+        return x * n
+    return multiplier
+
+# Multiplier of 3
+times3 = make_multiplier_of(3)
+
+# Multiplier of 5
+times5 = make_multiplier_of(5)
+
+# Output: 27
+print(times3(9))
+
+# Output: 15
+print(times5(3))
+
+# Output: 30
+print(times5(times3(2)))
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p>Late binding of closures</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+             return i*i
+        fs.append(f)
+    return fs
+f1, f2, f3 = count()
+print(f1(), f2(), f3())
+9 9 9
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f(j=i):
+             return j*j
+        fs.append(f)
+    return fs
+f1, f2, f3 = count()
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def count():
+    def f(j):
+        def g():
+            return j*j
+        return g
+    fs = []
+    for i in range(1, 4):
+        fs.append(f(i)) # f(i) is executed immediately
+    return fs
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def create_adders():
+    adders = []
+    for i in range(10):
+        def adder(x):
+            return i + x
+        adders.append(adder)
+    return adders
+
+for adder in create_adders():
+    print(adder(1))
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def create_adders():
+    adders = []
+    for i in range(10):
+        def adder(x, j=i):
+            return j + x
+        adders.append(adder)
+    return adders
+
+for adder in create_adders():
+    print(adder(1))
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p><b>The function you want to return should not cite the variable that will change at a later time (in a loop).</b></p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Recursion Intro</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>Calculate: Factorial $n!$</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def fact(n):
+    if n==1:
+        return 1
+    return n * fact(n - 1)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+===> fact(5)
+===> 5 * fact(4)
+===> 5 * (4 * fact(3))
+===> 5 * (4 * (3 * fact(2)))
+===> 5 * (4 * (3 * (2 * fact(1))))
+===> 5 * (4 * (3 * (2 * 1)))
+===> 5 * (4 * (3 * 2))
+===> 5 * (4 * 6)
+===> 5 * 24
+===> 120
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def fact(n):
+    if n==1:
+        return 1
+    return n * fact(n - 1)
+fact(1000) #Stack overflow
+
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>Tail Recursion</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def fact(n):
+    return fact_iter(n, 1)
+
+def fact_iter(num, product):
+    if num == 1:
+        return product
+    return fact_iter(num - 1, num * product)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+===> fact_iter(5, 1)
+===> fact_iter(4, 5)
+===> fact_iter(3, 20)
+===> fact_iter(2, 60)
+===> fact_iter(1, 120)
+===> 120
+</code></pre>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">6.5 Function (5)</h2>
+                    <p>Lambda function, generator, decorator</p>
+                </section>
+                <section>
+                    <h3>Anonymous function: lambda</h3>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def add( x, y ):
+    return x + y
+ 
+lambda x, y: x + y
+ 
+lambda x, y = 2: x + y
+lambda *z: z
+ 
+>>> a = lambda x, y: x + y
+>>> a( 1, 3 )
+4
+>>> b = lambda x, y = 2: x + y
+>>> b( 1 )
+3
+>>> b( 1, 3 )
+4
+>>> c = lambda *z: z
+>>> c( 10, 'test')
+(10, 'test')
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Sometimes the anonymous function is convenient.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>It has only one expression. (You do not have to use <b>return</b>)</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+sum = lambda arg1, arg2: arg1 + arg2
+
+print ("The total is : ", sum( 10, 20 ))
+print ("The total is : ", sum( 20, 20 ))
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> list(map(lambda x: x * x, [1, 2, 3, 4, 5, 6, 7, 8, 9]))
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+def f(x):
+    return x * x
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Four ways of creating a list</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def test1():
+    l = []
+    for i in range(100):
+    l = l + [i]
+
+def test2():
+    l = []
+    for i in range(100):
+        l.append(i)
+
+def test3():
+    l = list(range(100))
+
+def test4():
+    l = [i for in in range(100)]
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> [x * x for x in range(1, 11)]
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+>>> [x * x for x in range(1, 11) if x % 2 == 0]
+[4, 16, 36, 64, 100]
+
+>>> [m + n for m in 'ABC' for n in 'XYZ']
+['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
+
+>>> d = {'x': 'A', 'y': 'B', 'z': 'C' }
+>>> [k + '=' + v for k, v in d.items()]
+['y=B', 'x=A', 'z=C']
+
+>>> L = ['Hello', 'World', 'IBM', 'Apple']
+>>> [s.lower() for s in L]
+['hello', 'world', 'ibm', 'apple']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Generator</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+>>> L = [x * x for x in range(4)]
+>>> L
+[0, 1, 4, 9]
+>>> g = (x * x for x in range(10))
+>>> g
+<generator object <genexpr> at 0x1022ef630>
+
+>>> next(g)
+0
+>>> next(g)
+1
+>>> next(g)
+4
+>>> next(g)
+9
+>>> next(g)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+g = (x * x for x in range(10))
+for n in g:
+    print(n)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def yrange(n):
+    i = 0
+    while i < n:
+        yield i
+        i += 1 # i=i+1
+
+for x in yrange(6):
+    print(x)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>map()</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def f(x):
+    return x * x
+
+y = map(f, [1, 2, 3, 4, 5, 6, 7, 8, 9])    
+print(type(y))
+print(list(y))
+
+map
+[1, 4, 9, 16, 25, 36, 49, 64, 81]
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+print(list(map(str, [1, 2, 3, 4, 5, 6, 7, 8, 9])))
+['1', '2', '3', '4', '5', '6', '7', '8', '9']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>reduce()</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4) # It receives two arguments. 
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+from functools import reduce
+def add(x, y):
+    return x + y
+
+print(reduce(add, [1, 3, 5, 7, 9]))
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>filter()</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def is_odd(n):
+    return n % 2 == 1
+
+print(list(filter(is_odd, [1, 2, 4, 5, 6, 9, 10, 15])))
+
+[1, 5, 9, 15]
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def not_empty(s):
+    return s and s.strip()
+
+print(list(filter(not_empty, ['A', '', 'B', None, 'C', '  '])))
+
+['A', 'B', 'C']
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Decorator Basics</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def shout(word="yes"):
+    return word.capitalize()+"!"
+
+print(shout())
+# outputs : 'Yes!'
+# As an object, you can assign the function to a variable like any other object 
+scream = shout
+# Notice we don't use parentheses: we are not calling the function,
+# we are putting the function "shout" into the variable "scream".
+# It means you can then call "shout" from "scream":
+print(scream())
+# outputs : 'Yes!'
+# More than that, it means you can remove the old name 'shout',
+# and the function will still be accessible from 'scream'
+del shout
+print(scream())
+# outputs: 'Yes!'
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def talk():
+    # You can define a function on the fly in "talk" ...
+    def whisper(word="yes"):
+        return word.lower()+"..."
+    # ... and use it right away!
+    print(whisper())
+
+# You call "talk", that defines "whisper" EVERY TIME you call it, then
+# "whisper" is called in "talk". 
+talk()
+# outputs: 
+# "yes..."
+# But "whisper" DOES NOT EXIST outside "talk":
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def getTalk(kind="shout"):
+    # We define functions on the fly
+    def shout(word="yes"):
+        return word.capitalize()+"!"
+
+    def whisper(word="yes") :
+        return word.lower()+"...";
+    # Then we return one of them
+    if kind == "shout":
+        return shout  
+    else:
+        return whisper
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+# Get the function and assign it to a variable
+talk = getTalk()      
+# You can see that "talk" is here a function object:
+print(type(talk))
+#outputs : function
+print(talk())
+#outputs : Yes!
+print(getTalk("whisper")())
+#outputs : yes...
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li>
+                            <p>decorators are “wrappers”, which means that they let you execute code before and after the function they decorate without modifying the function itself.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+# A decorator is a function that expects ANOTHER function as parameter
+def my_shiny_new_decorator(a_function_to_decorate):
+    def the_wrapper_around_the_original_function():
+        print("Before the function runs")
+
+        a_function_to_decorate()
+
+        print("After the function runs")
+
+    return the_wrapper_around_the_original_function
+
+def a_stand_alone_function():
+    print("I am a stand alone function, don't you dare modify me")
+
+a_stand_alone_function() 
+#outputs: 
+I am a stand alone function, don't you dare modify me
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+a_stand_alone_function_decorated = my_shiny_new_decorator(a_stand_alone_function)
+a_stand_alone_function_decorated()
+#outputs:
+
+Before the function runs
+I am a stand alone function, don't you dare modify me
+After the function runs
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+@my_shiny_new_decorator
+def another_stand_alone_function():
+    print("Leave me alone")
+
+another_stand_alone_function()  
+#outputs:  
+Before the function runs
+Leave me alone
+After the function runs
+
+# @decorator is just a shortcut to: 
+# another_stand_alone_function = my_shiny_new_decorator(another_stand_alone_function)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def bread(func):
+    def wrapper():
+        print("</''''''\>")
+        func()
+        print("<\______/>")
+    return wrapper
+
+def ingredients(func):
+    def wrapper():
+        print("#tomatoes#")
+        func()
+        print("~salad~")
+    return wrapper
+
+def sandwich(food="--ham--"):
+    print(food)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+sandwich()
+#outputs: --ham--
+sandwich = bread(ingredients(sandwich))
+sandwich()
+#outputs:
+</''''''\>
+ #tomatoes#
+ --ham--
+ ~salad~
+<\______/>
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+@bread
+@ingredients # The order matters here.
+def sandwich(food="--ham--"):
+    print(food)
+
+sandwich()
+#outputs:
+</''''''\>
+ #tomatoes#
+ --ham--
+ ~salad~
+<\______/>
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Taking decorators to the next level</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Passing arguments to the decorated function</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def a_decorator_passing_arguments(function_to_decorate):
+    def a_wrapper_accepting_arguments(arg1, arg2):
+        print("I got args! Look: %s, %s" % (arg1, arg2))
+        function_to_decorate(arg1, arg2)
+    return a_wrapper_accepting_arguments
+
+@a_decorator_passing_arguments
+def print_full_name(first_name, last_name):
+    print("My name is %s, %s" % (first_name, last_name))
+
+print_full_name("Peter", "Venkman")
+# outputs:
+I got args! Look: Peter Venkman
+My name is Peter Venkman
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>If you’re making general-purpose decorator--one you’ll apply to any function or method, no matter its arguments--then just use *args, **kwargs:</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def a_decorator_passing_arbitrary_arguments(function_to_decorate):
+    # The wrapper accepts any arguments
+    def a_wrapper_accepting_arbitrary_arguments(*args, **kwargs):
+        print("Do I have args?:")
+        print(args)
+        print(kwargs)
+        function_to_decorate(*args, **kwargs)
+    return a_wrapper_accepting_arbitrary_arguments
+
+@a_decorator_passing_arbitrary_arguments
+def function_with_no_argument():
+    print("Python is cool, no argument here.")
+
+function_with_no_argument()
+#outputs
+Do I have args?:
+()
+{}
+Python is cool, no argument here.
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+@a_decorator_passing_arbitrary_arguments
+def function_with_arguments(a, b, c):
+    print(a, b, c)
+
+function_with_arguments(1,2,3)
+#outputs
+#Do I have args?:
+(1, 2, 3)
+{}
+1 2 3 
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+@a_decorator_passing_arbitrary_arguments
+def function_with_named_arguments(a, b, c, platypus="Why not ?"):
+    print("Do {0}, {1} and {2} like platypus? {3}".format(a, b, c, platypus))
+
+function_with_named_arguments("Bill", "Linus", "Steve", platypus="Indeed!")
+#outputs
+Do I have args ? :
+('Bill', 'Linus', 'Steve')
+{'platypus': 'Indeed!'}
+Do Bill, Linus and Steve like platypus? Indeed! 
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p><a href="https://stackoverflow.com/questions/739654/how-to-make-a-chain-of-function-decorators/1594484#1594484">Decorator Basics</a></p>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">6.6 Modules</h2>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Module is a Python file, followed with .py</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Storing Your Functions in Modules</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def make_pizza(size, *toppings):
+    print("\nMaking a " + str(size) +
+        "-inch pizza with the following toppings:")
+    for topping in toppings:
+        print("- " + topping)
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>It is saved as "pizza.py" file.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>We make a separate file called making_pizzas.py in the same directory as pizza.py.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import pizza
+
+pizza.make_pizza(16, 'pepperoni')
+pizza.make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Importing Specific Functions</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+from module_name import function_name
+
+from module_name import function_0, function_1, function_2
+
+from pizza import make_pizza
+make_pizza(16, 'pepperoni')
+make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Using as to Give a Function an Alias</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+from pizza import make_pizza as mp
+mp(16, 'pepperoni')
+mp(12, 'mushrooms', 'green peppers', 'extra cheese')
+
+from module_name import function_name as fn
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>Using as to Give a Module an Alias</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import pizza as p
+p.make_pizza(16, 'pepperoni')
+p.make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+
+import module_name as mn
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Importing All Functions in a Module</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+from pizza import *
+make_pizza(16, 'pepperoni')
+make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
+
+from module_name import *
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>The asterisk in the import statement tells Python to copy every function from the module pizza into this program file. Because every function is imported, you can call each function by name without using the dot notation.
+                            </p>
+                        </li>
+                        <li class="fragment">
+                            <p>However, it’s best not to use this approach when you’re working with larger modules that you didn’t write: if the module has a function name that matches an existing name in your project, you can get some unexpected results.
+                            </p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Search for Modules</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>When a module named is imported, the interpreter first searches for a built-in module with that name. If not found, it then searches for a file named xxx.py in a list of directories given by the variable sys.path. sys.path is initialized from these locations:</p>
+                        </li>
+                        <li class="fragment">
+                            <p>The directory containing the input script (or the current directory when no file is specified).</p>
+                        </li>
+                        <li class="fragment">
+                            <p>PYTHONPATH (a list of directory names, with the same syntax as the shell variable PATH).</p>
+                        </li>
+                        <li class="fragment">
+                            <p>The installation-dependent default.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import sys
+print(sys.path)
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <h3>Packages</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>Packages are namespaces which contain multiple packages and modules themselves. They are simply directories, but with a twist.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Each package in Python is a directory which <b>MUST</b> contain a special file called <b>__init__.py</b>. This file can be empty, and it indicates that the directory it contains is a Python package, so it can be imported the same way a module can be imported.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+mycompany
+├─ __init__.py
+├─ abc.py
+└─ xyz.py
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>The name of modules are mycompany.abc and mycompany.xyz</p>
+                        </li>
+                        <li class="fragment">
+                            <p><b>Be careful! The name of modules you created should not be in conflict with the name of any system module, or any build-in function.</b></p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Private functions in modules, _xxx, __xxx</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def _private_1(name):
+    return 'Hello, %s' % name
+
+def _private_2(name):
+    return 'Hi, %s' % name
+
+def greeting(name):
+    if len(name) > 3:
+        return _private_1(name)
+    else:
+        return _private_2(name)
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p><b>You can use those functions, but you would better not use.</b></p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Third party modules</h3>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import urllib
+dir(urllib)
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+pip install pillow
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>Change file name D:\Anaconda\Scripts, pip.exe and pip-script.exe to <b>condapip.exe</b> and <b>condapip-script.exe</b></p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+conda list
+condapip install itchat
+</code></pre>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2c3e50" style="color: white; text-align: left;">
+                    <h2 style="color: white">Summary</h2>
+                    <ul>
+                        <li>Functions</li>
+                        <ul>
+                            <li>Reading: Chapter 10.1-10.5, 10.7-10.8</li>
+                            <li>Reading: Python Crash Course, Chapter 8</li>
+                            <li>Homework: Problem set 2</li>
+                        </ul>
+                    </ul>
+                </section>
+            </section>
+        </div>
+    </div>
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 960,
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // Bounds for smallest/largest possible scale to apply to content
+        minScale: 0.2,
+        maxScale: 1.5,
+
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 120,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: Reveal.navigateNext,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // Hides the address bar on mobile devices
+        hideAddressBar: true,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Transition speed
+        transitionSpeed: 'default', // default/fast/slow
+
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Parallax background image
+        parallaxBackgroundImage: '', // e.g. "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
+
+        // Parallax background size
+        parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+
+        // Number of pixels to move the parallax background per slide
+        // - Calculated automatically unless specified
+        // - Set to 0 to disable movement along an axis
+        parallaxBackgroundHorizontal: null,
+        parallaxBackgroundVertical: null,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        dependencies: [
+            { src: 'plugin/markdown/marked.js' },
+            { src: 'plugin/markdown/markdown.js' },
+            { src: 'plugin/notes/notes.js', async: true },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            // Zoom in and out with Alt+click
+            { src: 'plugin/zoom-js/zoom.js', async: true },
+
+            // Speaker notes
+            { src: 'plugin/notes/notes.js', async: true },
+
+            // MathJax
+            { src: 'plugin/math/math.js', async: true },
+            { src: 'plugin/line-numbers/line-numbers.js' }
+        ]
+    });
+    </script>
+</body>
+
+</html>

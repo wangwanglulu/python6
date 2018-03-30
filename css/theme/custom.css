@@ -1,0 +1,43 @@
+#left {
+    padding: 0 1%;
+    text-align: left;
+    float: left;
+    width: 45%;
+    z-index: -10;
+}
+#right {
+    padding: 0 1%;
+    float: right;
+    text-align: left;
+    z-index: -10;
+    width: 45%;
+}
+
+#leftc {
+    text-align: center;
+    float: left;
+    width: 50%;
+    z-index: -10;
+}
+#rightc {
+    float: right;
+    text-align: center;
+    z-index: -10;
+    width: 50%;
+}
+
+#leftm {
+    padding: 0 1%;
+    text-align: left;
+    float: left;
+    width: 60%;
+    z-index: -10;
+}
+#rightm {
+    padding: 0 1%;
+    float: right;
+    text-align: left;
+    z-index: -10;
+    width: 35%;
+}
+
