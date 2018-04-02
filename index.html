@@ -136,46 +136,58 @@
                 <section>
                     <div class="fragment"><img data-src="intersection-map.png" style="height: 500pt"></div>
                 </section>
-                <section>
-                    <div id="leftc" class="fragment"><img data-src="decision.png" style="height: 250pt"></div>
-                    <div id="rightc" class="fragment"><img data-src="bad-decision.png" style="height: 250pt"></div>
+                <section data-background-image="bg.png">
+                    <div id="left" class="fragment"><img data-src="decision.png" style="height: 250pt"></div>
+                    <div id="right" class="fragment"><img data-src="bad-decision.png" style="height: 250pt"></div>
                 </section>
                 <section>
                     <div class="fragment"><img data-src="scatter-targets.png" style="height: 500pt"></div>
                 </section>
-                <section>
-                    <ul style="list-style-type:none">
-                        <li class="fragment">
-                            <p>Red Ghost</p>
-                        </li>
-                        <li class="fragment">
-                            <p><img data-src="blinky-targeting.png" style="height: 150pt"></p>
-                        </li>
-                        <li class="fragment">
-                            <p>Pink Ghost</p>
-                        </li>
-                        <li class="fragment">
-                            <p><img data-src="pinky-targeting.png" style="height: 200pt">
-                                <img data-src="pinky-targeting2.png" style="height: 200pt"></p>
-                        </li>
-                    </ul>
+                <section data-background-image="bg.png">
+                    <div id="left">
+                        <ul style="list-style-type:none">
+                            <li class="fragment">
+                                <p>Red Ghost</p>
+                            </li>
+                            <li class="fragment">
+                                <img data-src="blinky-targeting.png" style="height: 150pt">
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="right">
+                        <ul style="list-style-type:none">
+                            <li class="fragment">
+                                <p>Pink Ghost</p>
+                            </li>
+                            <li class="fragment">
+                                <img data-src="pinky-targeting.png" style="height: 150pt">
+                                <img data-src="pinky-targeting2.png" style="height: 200pt">
+                            </li>
+                        </ul>
+                    </div>
                 </section>
-                <section>
-                    <ul style="list-style-type:none">
-                        <li class="fragment">
-                            <p>Blue Ghost</p>
-                        </li>
-                        <li class="fragment">
-                            <p><img data-src="inky-targeting.png" style="height: 170pt"></p>
-                        </li>
-                        <li class="fragment">
-                            <p>Orange Ghost</p>
-                        </li>
-                        <li class="fragment">
-                            <p><img data-src="clyde-targeting2.png" style="height: 120pt">
-                                <img data-src="clyde-targeting3.png" style="height: 150pt"></p>
-                        </li>
-                    </ul>
+                <section data-background-image="bg.png">
+                    <div id="left">
+                        <ul style="list-style-type:none">
+                            <li class="fragment">
+                                <p>Blue Ghost</p>
+                            </li>
+                            <li class="fragment">
+                                <p><img data-src="inky-targeting.png" style="height: 250pt"></p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="right">
+                        <ul style="list-style-type:none">
+                            <li class="fragment">
+                                <p>Orange Ghost</p>
+                            </li>
+                            <li class="fragment">
+                                <img data-src="clyde-targeting2.png" style="height: 120pt">
+                                <img data-src="clyde-targeting3.png" style="height: 150pt">
+                            </li>
+                        </ul>
+                    </div>
                 </section>
                 <section>
                     <h3>Wrapping up</h3>
@@ -397,18 +409,19 @@ print(user_profile)
 </code></pre>
                     </div>
                 </section>
-                <section>
-                    <ul>
-                        <li class="fragment">Example</li>
-                    </ul>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
+                <section data-background-image="bg.png">
+                    <div id="left">
+                        <ul>
+                            <li class="fragment"><p>Example</p></li>
+                        </ul>
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
 def test(x,y=1,*a,**b):
     print(x,y,a,b)
 </code></pre>
-                    </div>
-                    <div class="fragment">
-                        <pre><code class="line-numbers" data-trim contenteditable>
+                        </div>
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
 test(1)
 test(1,2)
 test(1,2,3)
@@ -418,6 +431,27 @@ test(1,a=2)
 test(1,2,3,a=4)
 test(1,2,3,y=4)
 </code></pre>
+                        </div>
+                    </div>
+                    <div id="right">
+                        <ul>
+                            <li class="fragment"><p>Result</p></li>
+                        </ul>
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+1 1 () {}
+1 2 () {}
+1 2 (3,) {}
+1 2 (3, 4) {}
+1 2 () {}
+1 1 () {'a': 2}
+1 2 (3,) {'a': 4}
+Traceback (most recent call last):
+  File "test.py", line 11, in <module>
+    test(1,2,3,y=4)
+TypeError: test() got multiple values for argument 'y'
+</code></pre>
+                        </div>
                     </div>
                 </section>
             </section>
