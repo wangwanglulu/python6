@@ -96,7 +96,7 @@ def Start():
     print('Author: Pleiades')
     print('Press any key...')
     input()
-    os.system("cls")
+    os.system("clear")
     Init()
     PrintScreen()
     c = input()
