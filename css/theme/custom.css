@@ -1,20 +1,16 @@
-
-
 #left {
-  left:-8.33%;
-  float: left;
-  width:50%;
-  height: 100%;
-  z-index:-10;
+    padding: 0 1%;
+    text-align: left;
+    float: left;
+    width: 45%;
+    z-index: -10;
 }
-
 #right {
-  left:31.25%;
-  top: 75px;
-  float: right;
-  z-index:-10;
-  width:50%;
-  height: 100%;
+    padding: 0 1%;
+    float: right;
+    text-align: left;
+    z-index: -10;
+    width: 45%;
 }
 
 #leftc {
