@@ -30,11 +30,10 @@ def PrintScreen():
     for i in range(len(screen)):
         for j in range(width):
             print(screen[i][j] + ' ', end='')
-        print('|')
+        print()
 
 
 def Update():
-    global screen
     s = len(screen)
     line = []
     for j in range(width):
@@ -64,21 +63,19 @@ def Loop():
 
 
 def Start():
-    os.system("clear")
+    os.system("cls")
     print('== Game of Life ==')
     print('Author: Pleiades')
     print('Press any key...')
     input()
-    os.system("clear")
+    os.system("cls")
     Init()
     PrintScreen()
     c = input()
     while c != 'q':
-        os.system("clear")
+        os.system("cls")
         Loop()
         c = input()
     print('End')
-
-
 
 Start()

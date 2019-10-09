@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>reveal.js</title>
+    <title>Lecture 6</title>
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/white.css">
     <link rel="stylesheet" href="css/theme/custom.css">
@@ -29,7 +29,160 @@
             </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">6.1 Game of Life</h2>
+                    <h2 style="color: white">6.1 Complex Systems</h2>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>The love game is boring. Why?</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Each challenge is a unique puzzle, and each puzzle has a unique action that solves it.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>In Tetris, the challenge is created by a combination of a random sequence of tetrominoes and the player's previous actions in dealing with them.
+                            </p>
+                        </li>
+                        <div id="leftc" class="fragment"><img data-src="tetris.png" style="height: 250pt"></div>
+                        <div id="rightc" class="fragment"><img data-src="jump.jpg" style="height: 250pt"></div>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Games of Emergence</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>Games of emergence have a high replay value because the challenges and possible actions that occur while playing are different every time.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>It is very hard to predict whether interesting gameplay will emerge from a particular game simply by looking at the rules.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>It should be clear that creating emergence is not simply a matter of having many rules. You cannot create a more interesting game simply by adding more rules. In fact, sometimes it is more effective to reduce the number of rules to create a system that displays truly interesting and emergent gameplay.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Complex System</h3>
+                    <ul>
+                        <li class="fragment">
+                            <p>The system consists of many parts.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>these parts are often quite simple to understand and to model individually</p>
+                        </li>
+                        <li class="fragment">
+                            <p>When these parts are put together, most complex systems display surprising and unpredictable behavior that can be difficult to explain just by looking at the parts separately.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Can emergence be Designed?</p>
+                        </li>
+                        <li class="fragment">
+                            <p>We start with the simple cases.</p>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">6.2 Cellular automaton</h2>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>At the boundary of mathematics, computer science, and games lies a peculiar field that studies <b>cellular automaton</b>.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>cellular automaton is a simple set of rules governing the appearance of spaces, or cells, in a line or on a grid. </p>
+                        </li>
+                        <li class="fragment">
+                            <p>Each cell may be either black or white. The rules determine what causes a cell to change from black to white (or vice versa) and how the color of a cell influences the cells around it.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Mathematicians think of such a collection of rules as a hypothetical machine that operates by itself without human intervention. This is why they are called automata.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>A cellular automaton starts with its cells in a given configuration (some white, some black) and then applies the rules to each cell to determine whether its color should change.
+                            </p>
+                        </li>
+                        <li class="fragment">
+                            <p>It does not change a cell immediately; it checks every cell in the grid first, marks the ones to be changed, and then changes them all before the next iteration. Then it repeats the process. Each iteration is called a <b>generation</b>.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>British scientist Stephen Wolfram has created a simple cellular automaton that exhibits emergent behavior.</p>
+                        </li>
+                    </ul>
+                    <div class="fragment"><img data-src="wolfram.jpg" style="height: 250pt"></div>
+                    <ul>
+                        <li class="fragment">
+                            <p>He was named an inaugural fellow of the American Mathematical Society. he is the founder and CEO of the software company Wolfram Research where he worked as chief designer of Mathematica and the Wolfram Alpha answer engine.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>The simple cellular automaton</h3>
+                    <div class="fragment"><img data-src="rule.png" style="height: 100pt"></div>
+                    <ul>
+                        <li class="fragment">
+                            <p>It displays one set of possible rules and the resulting, surprisingly complex pattern that is created by printing each new generation of the system under the previous one. It begins with one black cell and all the rest white.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Notice that even though there is nothing random in the rules, this cellular automaton produces a pattern with distinctive and apparently random features.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <div class="fragment"><img data-src="firstca.png" style="height: 500pt"></div>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Wolfram described his work in detail in his book A New Kind of Science (2002).</p>
+                            <ul>
+                                <li class="fragment">
+                                    <p>They must consist of simple cells whose rules are defined locally.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The system must allow for long-range communication.</p>
+                                </li>
+                                <li class="fragment">
+                                    <p>The level of activity of the cells is a good indicator for the complexity of the behavior of the system.</p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <ul>
+                        <li class="fragment">
+                            <p>Cellular automata show us that the threshold for complexity is surprisingly low.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Application</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Let's build this simple model with Python.</p>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">6.3 Game of Life</h2>
                 </section>
                 <section>
                     <ul>
@@ -206,16 +359,13 @@
                     </ul>
                 </section>
             </section>
-
             <section>
                 <section data-background="#2c3e50" style="color: white; text-align: left;">
                     <h2 style="color: white">Summary</h2>
                     <ul>
                         <li>Functions</li>
                         <ul>
-                            <li>Reading: Chapter 10.1-10.5, 10.7-10.8</li>
                             <li>Reading: Python Crash Course, Chapter 8</li>
-                            <li>Homework: Problem set 3</li>
                         </ul>
                     </ul>
                 </section>
