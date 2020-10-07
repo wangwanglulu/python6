@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/theme/white.css">
     <link rel="stylesheet" href="css/theme/custom.css">
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="lib/css/googlecode.css">
     <!-- Printing and PDF exports -->
     <script>
     var link = document.createElement('link');
@@ -25,41 +25,371 @@
         <div class="slides">
             <section data-background-video="bgm.mp4" data-background-video-loop data-background-video-muted style="text-align: left;">
                 <h2 style="color: white">Python Programming</h2>
-                <h5 style="color: white">Lecture 6 Game of Life</h5>
+                <h5 style="color: white">Lecture 6 Functions, Game of Life</h5>
             </section>
             <section>
                 <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">6.1 Complex Systems</h2>
+                    <h2 style="color: white">6.1 Functions (2)</h2>
+                    <h5>mutable vs. immutable, variable scope</h5>
+                </section>
+                <section>
+                    <h4>mutable vs. immutable</h4>
+                    <ul>
+                        <li>
+                            <p>For immutable objects (number, string, tuple), the assignment inside a function cannot change the value of the variable outside the function even if the variable name inside is the same with the variable name outside.</p>
+                        </li>
+                    </ul>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def ChangeInt(a):
+    a = 10
+
+b = 2
+ChangeInt(b)
+print(b) #output: 2
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def ChangeInt(b):
+    b = 10
+
+b = 2
+ChangeInt(b)
+print(b) #output: 2
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def ChangeInt(b):
+    b = 10
+    return b
+
+b = 2
+x = ChangeInt(b)
+print(x, b) #output: 10 2
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def ChangeInt(a): 
+    b = 10
+    return b
+
+b = 2
+x = ChangeInt(b)
+print(x, b) #output: 10 2
+</code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h3>Examples</h3>
+                    <div class="div-a">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def ChangeInt(a):
+    a = 10
+    print(a)
+    return a
+
+b = 2
+ChangeInt(b)
+print(b) 
+print(ChangeInt(b))
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-b">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+10
+2
+10
+10
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-a">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def ChangeInt(a):
+    a = 10
+    print(a)
+
+b = 2
+ChangeInt(b)
+print(b) 
+print(ChangeInt(b))
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-b">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+10
+2
+10
+None
+</code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <ul>
+                        <li>
+                            <p>For mutable objects (list, dictionary), the <b>assignment</b> inside a function cannot change the value of the variable outside the function.<b> (the same with immutable objects!)</b></p>
+                        </li>
+                    </ul>
+                    <div class="div-a">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def changeme(mylist):
+   mylist = [1,2]
+   print("inside: ", mylist)
+ 
+x = [10,20]
+changeme(x)
+print("outside: ", x)
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-b">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+inside:  [1, 2]
+outside:  [10, 20]
+</code></pre>
+                        </div>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>However, the modification <b>can</b> change the value of the variable outside.</p>
+                        </li>
+                    </ul>
+                    <div class="div-a">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+def changeme(mylist):
+   mylist.extend([1,2])
+   print ("inside: ", mylist)
+ 
+x = [10,20]
+changeme(x)
+print ("outside: ", x)
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-b">
+                        <div class="fragment">
+                            <pre><code class="output" data-trim contenteditable>
+inside:  [10, 20, 1, 2]
+outside:  [10, 20, 1, 2]
+</code></pre>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <h4>Variable Scope</h4>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+ 
+g_count = 0  # Global
+def outer():
+    i_count = 2  # Local
+</code></pre>
+                    </div>
+                    <ul>
+                        <li class="fragment">
+                            <p>In Python, module, class, def, lambda can introduce new variable scope, if/elif/else/, try/except, for/while will not introduce new variable scope.</p>
+                        </li>
+                        <li class="fragment">
+                            <p>Local$\rightarrow$Global</p>
+                        </li>
+                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+if True:
+    msg = 'I am from Shanghai'
+print(msg) # We can use msg.
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def test():
+    msg = 'I am from Shanghai'
+print(msg) # error
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">New Assignment</p>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+msg = 'I am from Shanghai'
+def test():
+    msg = 'I am from Beijing'
+    print(msg) 
+test()
+print(msg)
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" contenteditable>
+I am from Beijing
+I am from Shanghai
+
+
+
+</code></pre>
+                        </div>
+                    </div>
+                    <p class="fragment"><b>Reference</b></p>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+msg = 'I am from Shanghai'
+def test():
+    print(msg) 
+test()
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" contenteditable>
+I am from Shanghai
+
+
+</code></pre>
+                        </div>
+                    </div>
+                    <p class="fragment">Modification</p>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+msg = 'I am from Shanghai'
+def test():
+    print(msg) 
+    msg = 'I am from Beijing' 
+test() 
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="error" contenteditable>
+UnboundLocalError: local variable 'msg' 
+referenced before assignment
+
+
+</code></pre>
+                        </div>
+                    </div>
                 </section>
                 <section>
                     <ul>
                         <li class="fragment">
-                            <p>The love game is boring. Why?</p>
+                            <p>How to modify the variable outside? The <b>global</b> keyword</p>
                         </li>
-                        <li class="fragment">
-                            <p>Each challenge is a unique puzzle, and each puzzle has a unique action that solves it.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>In Tetris, the challenge is created by a combination of a random sequence of tetrominoes and the player's previous actions in dealing with them.
-                            </p>
-                        </li>
-                        <div id="leftc" class="fragment"><img data-src="tetris.png" style="height: 250pt"></div>
-                        <div id="rightc" class="fragment"><img data-src="jump.jpg" style="height: 250pt"></div>
                     </ul>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+num = 1
+def fun():
+    global num
+    num = 123
+    print(num)
+fun()
+print(num)
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="output" contenteditable>
+123
+123
+
+
+ 
+
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-c">
+                        <div class="fragment">
+                            <pre><code class="line-numbers" data-trim contenteditable>
+num = 1
+def fun():
+    print(num)
+    global num  
+    num = 123
+    print(num)
+fun()
+</code></pre>
+                        </div>
+                    </div>
+                    <div class="div-d">
+                        <div class="fragment">
+                            <pre><code class="error" contenteditable>
+SyntaxError: name 'num' is used 
+prior to global declaration
+
+
+
+
+</code></pre>
+                        </div>
+                    </div>
                 </section>
                 <section>
-                    <h3>Games of Emergence</h3>
-                    <ul>
-                        <li class="fragment">
-                            <p>Games of emergence have a high replay value because the challenges and possible actions that occur while playing are different every time.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>It is very hard to predict whether interesting gameplay will emerge from a particular game simply by looking at the rules.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>It should be clear that creating emergence is not simply a matter of having many rules. You cannot create a more interesting game simply by adding more rules. In fact, sometimes it is more effective to reduce the number of rules to create a system that displays truly interesting and emergent gameplay.</p>
-                        </li>
-                    </ul>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+a = 10
+def test():
+    a = a + 1
+    print(a)
+test() # error
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+a = 10
+def test():
+    global a 
+    a = a + 1
+    print(a)
+test() # output: 11
+</code></pre>
+                    </div>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+a = 10
+def test():
+    a=10
+    a = a + 1
+    print(a)
+test() # output: 11
+print(a) # output: 10
+</code></pre>
+                    </div>
+                </section>
+            </section>
+            <section>
+                <section data-background="#2980b9" style="color: white">
+                    <h2 style="color: white">6.2 Game of Life (生命演化游戏)</h2>
                 </section>
                 <section>
                     <h3>Complex System</h3>
@@ -68,7 +398,7 @@
                             <p>The system consists of many parts.</p>
                         </li>
                         <li class="fragment">
-                            <p>these parts are often quite simple to understand and to model individually</p>
+                            <p>These parts are often quite simple to understand and to model individually. (The Butterfly Effect)</p>
                         </li>
                         <li class="fragment">
                             <p>When these parts are put together, most complex systems display surprising and unpredictable behavior that can be difficult to explain just by looking at the parts separately.</p>
@@ -76,27 +406,13 @@
                     </ul>
                 </section>
                 <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Can emergence be Designed?</p>
-                        </li>
-                        <li class="fragment">
-                            <p>We start with the simple cases.</p>
-                        </li>
-                    </ul>
-                </section>
-            </section>
-            <section>
-                <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">6.2 Cellular automaton</h2>
-                </section>
-                <section>
+                    <h3>Cellular Automaton (元胞自动机)</h3>
                     <ul>
                         <li class="fragment">
                             <p>At the boundary of mathematics, computer science, and games lies a peculiar field that studies <b>cellular automaton</b>.</p>
                         </li>
                         <li class="fragment">
-                            <p>cellular automaton is a simple set of rules governing the appearance of spaces, or cells, in a line or on a grid. </p>
+                            <p>Cellular automaton is a simple set of rules governing the appearance of spaces, or cells, in a line or on a grid. </p>
                         </li>
                         <li class="fragment">
                             <p>Each cell may be either black or white. The rules determine what causes a cell to change from black to white (or vice versa) and how the color of a cell influences the cells around it.</p>
@@ -118,90 +434,23 @@
                     </ul>
                 </section>
                 <section>
+                    <h3>Game of Life</h3>
                     <ul>
                         <li class="fragment">
-                            <p>British scientist Stephen Wolfram has created a simple cellular automaton that exhibits emergent behavior.</p>
-                        </li>
-                    </ul>
-                    <div class="fragment"><img data-src="wolfram.jpg" style="height: 250pt"></div>
-                    <ul>
-                        <li class="fragment">
-                            <p>He was named an inaugural fellow of the American Mathematical Society. he is the founder and CEO of the software company Wolfram Research where he worked as chief designer of Mathematica and the Wolfram Alpha answer engine.</p>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>The simple cellular automaton</h3>
-                    <div class="fragment"><img data-src="rule.png" style="height: 100pt"></div>
-                    <ul>
-                        <li class="fragment">
-                            <p>It displays one set of possible rules and the resulting, surprisingly complex pattern that is created by printing each new generation of the system under the previous one. It begins with one black cell and all the rest white.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>Notice that even though there is nothing random in the rules, this cellular automaton produces a pattern with distinctive and apparently random features.</p>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <div class="fragment"><img data-src="firstca.png" style="height: 500pt"></div>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Wolfram described his work in detail in his book A New Kind of Science (2002).</p>
-                            <ul>
-                                <li class="fragment">
-                                    <p>They must consist of simple cells whose rules are defined locally.</p>
-                                </li>
-                                <li class="fragment">
-                                    <p>The system must allow for long-range communication.</p>
-                                </li>
-                                <li class="fragment">
-                                    <p>The level of activity of the cells is a good indicator for the complexity of the behavior of the system.</p>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Cellular automata show us that the threshold for complexity is surprisingly low.</p>
-                        </li>
-                        <li class="fragment">
-                            <p>Application</p>
-                        </li>
-                        <li class="fragment">
-                            <p>Let's build this simple model with Python.</p>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    
-                </section>
-            </section>
-            <section>
-                <section data-background="#2980b9" style="color: white">
-                    <h2 style="color: white">6.3 Game of Life</h2>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Stephen Wolfram was not the only mathematician to study cellular automata. Probably the most famous cellular automaton was invented by John Conway and is called the Game of Life.</p>
+                            <p>Probably the most famous cellular automaton was invented by John Conway and is called the Game of Life.</p>
                         </li>
                     </ul>
                     <div class="fragment"><img data-src="conway.jpg" style="height: 200pt"></div>
                     <ul>
                         <li class="fragment">
-                            <p>Conway is currently Professor Emeritus of Mathematics at Princeton University in New Jersey.</p>
+                            <p>Conway was a Professor Emeritus of Mathematics at Princeton University in New Jersey.</p>
                         </li>
                     </ul>
                 </section>
                 <section>
-                    <h3>Game of Life</h3>
                     <ul>
                         <li class="fragment">
-                            <p>Conway’s automaton consists of cells that are laid out on a two-dimensional grid.</p>
+                            <p>Conway's automaton consists of cells that are laid out on a two-dimensional grid.</p>
                         </li>
                         <li class="fragment">
                             <p>this grid goes on indefinitely in all directions. Each cell on the grid has eight neighbors: the cells that surround it orthogonally and diagonally. Each cell can be in two different states: It is either dead or alive.</p>
@@ -244,16 +493,132 @@
                     </ul>
                 </section>
                 <section>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+import os
+import random
+
+width = 60
+height = 60
+screen = []
+</code></pre>
+                    </div>
+                    <p class="fragment">Step 1: Initialization</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def Init():
+    for i in range(height):
+        line = []
+        for j in range(width):
+            if random.random() > 0.8:
+                line.append('#')
+            else:
+                line.append(' ')
+        screen.append(line)
+</code></pre>
+                    </div>
+                    <p class="fragment">Step 2: Show the screen</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def PrintScreen():
+    for i in range(height):
+        for j in range(width):
+            print(screen[i][j] + ' ', end='')
+        print()
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Step 3: Show the screen</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def TryGetCell(i, j):
+    i = i % height
+    j = j % width
+    return screen[i][j]
+</code></pre>
+                    </div>
+                    <p class="fragment">Step 4: Count cells nearby</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def GetNearbyCellsCount(i, j):
+    nearby = []
+    nearby.append(TryGetCell(i - 1, j - 1))
+    nearby.append(TryGetCell(i - 1, j))
+    nearby.append(TryGetCell(i - 1, j + 1))
+    nearby.append(TryGetCell(i, j - 1))
+    nearby.append(TryGetCell(i, j + 1))
+    nearby.append(TryGetCell(i + 1, j - 1))
+    nearby.append(TryGetCell(i + 1, j))
+    nearby.append(TryGetCell(i + 1, j + 1))
+    num = 0
+    for x in nearby:
+        if x == '#':
+            num = num + 1
+    return num
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Step 5: Update</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def Update():
+    global screen
+    newScreen = []
+    for i in range(height):
+        line = []
+        for j in range(width):
+            line.append(' ')
+        newScreen.append(line)
+    for i in range(height):
+        for j in range(width):
+            count = GetNearbyCellsCount(i, j)
+            if count == 3:
+                newScreen[i][j] = '#'
+            elif count < 2 or count > 3:
+                newScreen[i][j] = ' '
+            else:
+                newScreen[i][j] = screen[i][j]    
+    screen = newScreen
+</code></pre>
+                    </div>
+                </section>
+                <section>
+                    <p class="fragment">Step 6: Console</p>
+                    <div class="fragment">
+                        <pre><code class="line-numbers" data-trim contenteditable>
+def Start():
+    os.system("cls")
+    print('== Game of Life ==')
+    print('Press any key...')
+    input()
+    os.system("cls")
+    Init()
+    PrintScreen()
+    c = input()
+    while c!= 'q':
+        os.system("cls")
+        Update()
+        PrintScreen()   
+        c = input()
+    print('End')
+
+Start()
+</code></pre>
+                    </div>
+                </section>
+                <section>
                     <ul>
                         <li class="fragment">
-                            <p>One of the earliest questions that the researchers studying the Game of Life asked themselves was this: “Is there an initial configuration of live cells that expands forever?”</p>
+                            <p>One of the earliest questions that the researchers studying the Game of Life asked themselves was this: "Is there an initial configuration of live cells that expands forever?"</p>
                         </li>
                         <li class="fragment">
                             <p><b>glider</b></p>
                         </li>
                         <div class="fragment"><img data-src="glider.png" style="height: 100pt"></div>
                         <li class="fragment">
-                            <p>Demo: glider and double gliders</p>
+                            <p>Demo: glider</p>
                         </li>
                     </ul>
                 </section>
@@ -264,98 +629,6 @@
                         </li>
                         <div class="fragment"><img data-src="glidergun.png" style="height: 150pt"></div>
                         <div class="fragment"><img data-src="glider_gun.gif" style="height: 150pt"></div>
-                        <li class="fragment">
-                            <p>Demo: glider gun</p>
-                        </li>
-                    </ul>
-                </section>
-            </section>
-            <section>
-                <section data-background="#f1c40f" style="color: white">
-                    <h2 style="color: white">6.2 Pac-man Game</h2>
-                </section>
-                <section>
-                    <ul>
-                        <li class="fragment">
-                            <p>Pac-Man (Japanese: パックマン Hepburn: Pakkuman), stylized as PAC-MAN, is an arcade game developed by Namco and first released in Japan in May 1980.</p>
-                        </li>
-                        <div id="leftc" class="fragment"><img data-src="initial-playfield.png" style="height: 300pt"></div>
-                        <div id="rightc" class="fragment"><img data-src="pacman.jpg" style="height: 300pt"></div>
-                    </ul>
-                </section>
-                <section>
-                    <div class="fragment"><img data-src="tiled-playfield.png" style="height: 500pt"></div>
-                </section>
-                <section>
-                    <div class="fragment"><img data-src="intersection-map.png" style="height: 500pt"></div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div id="left" class="fragment"><img data-src="decision.png" style="height: 250pt"></div>
-                    <div id="right" class="fragment"><img data-src="bad-decision.png" style="height: 250pt"></div>
-                </section>
-                <section>
-                    <div class="fragment"><img data-src="scatter-targets.png" style="height: 500pt"></div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div id="left">
-                        <ul style="list-style-type:none">
-                            <li class="fragment">
-                                <p>Red Ghost</p>
-                            </li>
-                            <li class="fragment">
-                                <img data-src="blinky-targeting.png" style="height: 150pt">
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="right">
-                        <ul style="list-style-type:none">
-                            <li class="fragment">
-                                <p>Pink Ghost</p>
-                            </li>
-                            <li class="fragment">
-                                <img data-src="pinky-targeting.png" style="height: 150pt">
-                                <img data-src="pinky-targeting2.png" style="height: 200pt">
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-                <section data-background-image="bg.png">
-                    <div id="left">
-                        <ul style="list-style-type:none">
-                            <li class="fragment">
-                                <p>Blue Ghost</p>
-                            </li>
-                            <li class="fragment">
-                                <p><img data-src="inky-targeting.png" style="height: 250pt"></p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div id="right">
-                        <ul style="list-style-type:none">
-                            <li class="fragment">
-                                <p>Orange Ghost</p>
-                            </li>
-                            <li class="fragment">
-                                <img data-src="clyde-targeting2.png" style="height: 120pt">
-                                <img data-src="clyde-targeting3.png" style="height: 150pt">
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-                <section>
-                    <h3>Wrapping up</h3>
-                    <ul>
-                        <li class="fragment">
-                            <p>Pac-Man is an amazing example of seemingly-complex behavior arising from only a few cleverly-designed rules</p>
-                        </li>
-                        <li class="fragment">
-                            <p>The combination of simple behaviors gives players the impression they are being hunted collaboratively, when they simply have complementary strategies.
-                            </p>
-                        </li>
-                        <li class="fragment">
-                            <p>Finally, let's take a look at the AMAZING game of life again.
-                            </p>
-                        </li>
                     </ul>
                 </section>
             </section>
@@ -365,6 +638,7 @@
                     <ul>
                         <li>Functions</li>
                         <ul>
+                            <li>Reading: Python for Everybody, Chapter 10.1-10.5, 10.7-10.8</li>
                             <li>Reading: Python Crash Course, Chapter 8</li>
                         </ul>
                     </ul>

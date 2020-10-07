@@ -33,7 +33,7 @@ def PrintScreen():
     for i in range(height):
         for j in range(width):
             print(screen[i][j] + ' ', end='')
-        print('|')
+        print()
 
 
 def TryGetCell(i, j):
@@ -78,24 +78,20 @@ def Update():
                 newScreen[i][j] = screen[i][j]    
     screen = newScreen
 
-def Loop():
-    Update()
-    PrintScreen()
-
 
 def Start():
     os.system("cls")
     print('== Game of Life ==')
-    print('Author: Pleiades')
     print('Press any key...')
     input()
     os.system("cls")
     Init()
     PrintScreen()
     c = input()
-    while c != 'q':
+    while c!= 'q':
         os.system("cls")
-        Loop()
+        Update()
+        PrintScreen()   
         c = input()
     print('End')
 

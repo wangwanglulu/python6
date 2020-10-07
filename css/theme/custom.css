@@ -1,11 +1,11 @@
-#left {
+div.left {
     padding: 0 1%;
     text-align: left;
     float: left;
     width: 45%;
     z-index: -10;
 }
-#right {
+div.right {
     padding: 0 1%;
     float: right;
     text-align: left;
@@ -13,31 +13,71 @@
     width: 45%;
 }
 
-#leftc {
+div.leftc {
     text-align: center;
     float: left;
     width: 50%;
     z-index: -10;
 }
-#rightc {
+div.rightc {
     float: right;
     text-align: center;
     z-index: -10;
     width: 50%;
 }
 
-#leftm {
+div.leftm {
     padding: 0 1%;
     text-align: left;
     float: left;
     width: 60%;
     z-index: -10;
 }
-#rightm {
+div.rightm {
     padding: 0 1%;
     float: right;
     text-align: left;
     z-index: -10;
     width: 35%;
 }
+
+div.div-a {
+    float:left;
+    width: 70%;
+    border: 0px;
+}
+div.div-b {
+    float:right;
+    width: 30%;
+    border: 0px;
+
+}
+div.div-c {
+    float:left;
+    width: 50%;
+    border: 0px;
+}
+div.div-d {
+    float:right;
+    width: 50%;
+    border: 0px;
+
+}
+code.output{
+    background-color: #ecf0f1;
+}
+code.note{
+    background-color: #f6e58d;
+}
+
+code.error{
+    background-color: #fab1a0;
+}
+
+span.output{
+    background: #ecf0f1;
+}
+
+
+
 
